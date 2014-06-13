@@ -1,5 +1,6 @@
 ﻿using System;
 using StationalDat;
+using System.Collections.Generic;
 
 namespace DynamicDat
 {
@@ -13,6 +14,26 @@ namespace DynamicDat
         double[] mathwaitturnoftime;
         double[] pservicetime;
         double[,] fivepercenttube; //Значения пятипроцентной трубки
+
+        //Дополнительные переменные для сериализации
+        double[] tubeup, tubedown;
+        List<double[]> probabilitytimeline = new List<double[]>();
+
+        public double[] TubeUp
+        {
+            get { return this.tubeup; }
+            set { this.tubeup = value; }
+        }
+        public double[] TubeDown
+        {
+            get { return this.tubedown; }
+            set { this.tubedown = value; }
+        }
+        public List<double[]>  ProbabilitytimeLine
+        {
+            get { return this.probabilitytimeline; }
+            set { this.probabilitytimeline = value; }
+        }
 
         public double[,] FivePerCentTube
         {
@@ -122,6 +143,15 @@ namespace DynamicDat
                 for (int k = 0; k <= N + M; k++) { probabilitytime[j + 1, k] = Pk_t[j, k]; }
                 time[j + 1] = Time_[j];
             }
+            //Преобразовываем объект для сериализации
+            for (int j = 0; j <= N + M; j++ )
+            {
+                double[] Pj = new double[probabilitytime.GetLength(0)];
+                for (int i = 0; i < probabilitytime.GetLength(0); i++ )
+                { Pj[i] = probabilitytime[i, j]; }
+                probabilitytimeline.Add(Pj);
+            }
+
         }
 
         /* 
@@ -205,10 +235,15 @@ namespace DynamicDat
         void CalcFivePerCentTube()
         {
             fivepercenttube = new double[N + M + 1, 2];
+            
+            tubeup = new double[N + M + 1];
+            tubedown = new double[N + M + 1];
             for (int i = 0; i <= N + M; i++)
             {
                 fivepercenttube[i, 0] = Probability[i] * 0.975;
+                tubedown[i] = fivepercenttube[i, 0];
                 fivepercenttube[i, 1] = Probability[i] * 1.025;
+                tubeup[i] = fivepercenttube[i, 1];
             }
         }
         /*
