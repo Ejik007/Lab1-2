@@ -1,19 +1,13 @@
 ﻿﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using ZedGraph;
-using Stationaldat;
-using Dinamicdat;
+using StationalDat;
+using DynamicDat;
 using System.Xml.Serialization;
-
+using System.Collections.Generic;
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
@@ -42,24 +36,19 @@ namespace WindowsFormsApplication1
             double lyamda = (double)ValueLyamda.Value;
             double mu = (double)ValueMu.Value;
 
-            PrintingDynamicData dinamic = new PrintingDynamicData(n, m, lyamda, mu, filename, zedGraphControl1);
-            dinamic.PrintPk_t();
-            dinamic.PrintTube();
-            dinamic.PrintProperties();
+            PrintingDynamicData dynamic = new PrintingDynamicData(n, m, lyamda, mu, filename, zedGraphControl1);
+            dynamic.PrintPk_t();
+            dynamic.PrintTube();
+            dynamic.PrintProperties();
             PrintStationaryData stat = new PrintStationaryData(n, m, lyamda, mu, filename);
             stat.PrintFull();
 
-            XmlSerializer xml = new XmlSerializer(typeof(PrintStationaryData));
-            using (var fStream = new FileStream("StationalData.xml", FileMode.Create, FileAccess.Write, FileShare.None))
+            XmlSerializer xml2 = new XmlSerializer(typeof(PrintingDynamicData));
+            using (var fStream = new FileStream("DynamicData.xml", FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                xml.Serialize(fStream, stat);
+                xml2.Serialize(fStream, dynamic);
             }
 
-            XmlSerializer xml2 = new XmlSerializer(typeof(PrintingDynamicData));
-            using (var fStream = new FileStream("DinamicData.xml", FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                xml.Serialize(fStream, dinamic);
-            }
 
 
             if (radioButtonM.Checked)
@@ -74,15 +63,18 @@ namespace WindowsFormsApplication1
                 mass_of_m = mass_of_m.Distinct().ToArray(); //удаляем повторяющиеся элементы
                 mass_of_m = mass_of_m.OrderBy(x => x).ToArray(); //сортируем по возрастанию
                 PrintStationaryData[] variations = new PrintStationaryData[mass_of_m.Length];
-               
+                List<PrintStationaryData> variation = new List<PrintStationaryData>();
+
+                for (int i = 0; i < mass_of_m.Length; i++)
+                {
+                    variations[i] = new PrintStationaryData(n, mass_of_m[i], lyamda, mu, filename);
+                    variations[i].PrintShort();
+                    variation.Add(variations[i]);
+                }
+                XmlSerializer xml3 = new XmlSerializer(variation.GetType());
                 using (var fStream = new FileStream("Variation.xml", FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    for (int i = 0; i < mass_of_m.Length; i++)
-                    {
-                        variations[i] = new PrintStationaryData(n, mass_of_m[i], lyamda, mu, filename);
-                        variations[i].PrintShort();
-                        xml.Serialize(fStream, variations[i]);
-                    }
+                    xml3.Serialize(fStream, variation);
                 }
             }
             else
@@ -97,18 +89,21 @@ namespace WindowsFormsApplication1
                 mass_of_n = mass_of_n.Distinct().ToArray();
                 mass_of_n = mass_of_n.OrderBy(x => x).ToArray();
                 PrintStationaryData[] variations = new PrintStationaryData[mass_of_n.Length];
-                
+                List<PrintStationaryData> variation = new List<PrintStationaryData>();
+
+                for (int i = 0; i < mass_of_n.Length; i++)
+                {
+                    if (lyamda / mu / mass_of_n[i] != 1)
+                    {
+                        variations[i] = new PrintStationaryData(mass_of_n[i], m, lyamda, mu, filename);
+                        variations[i].PrintShort();
+                        variation.Add(variations[i]);
+                    }
+                }
+                XmlSerializer xml3 = new XmlSerializer(variation.GetType());
                 using (var fStream = new FileStream("Variation.xml", FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    for (int i = 0; i < mass_of_n.Length; i++)
-                    {
-                        if (lyamda / mu / mass_of_n[i] != 1)
-                        {
-                            variations[i] = new PrintStationaryData(mass_of_n[i], m, lyamda, mu, filename);
-                            variations[i].PrintShort();
-                            xml.Serialize(fStream, variations[i]);
-                        }
-                    }
+                    xml3.Serialize(fStream, variation);
                 }
             }
         }
@@ -152,9 +147,9 @@ namespace WindowsFormsApplication1
             file.WriteLine();
             file.WriteLine("И в сумме они дают единицу.");
             file.WriteLine("Расчитываю основные характеристики:");
-            file.WriteLine("Мат. ожидание канала = {0}", Math_wait_canal, 5);
-            file.WriteLine("Мат. ожидание очереди = {0}", Math_wait_turn, 5);
-            file.WriteLine("Вероятность обслуживания = {0}", P_of_service, 5);
+            file.WriteLine("Мат. ожидание канала = {0}", MathWaitСanal, 5);
+            file.WriteLine("Мат. ожидание очереди = {0}", MathWaitTurn, 5);
+            file.WriteLine("Вероятность обслуживания = {0}", PService, 5);
             file.WriteLine();
             file.WriteLine();
             file.Close();
@@ -168,7 +163,7 @@ namespace WindowsFormsApplication1
                 file.Write("P{0}={1} ", i, Probability[i]);
             }
             file.WriteLine();
-            file.WriteLine("m.кан={0} m.оч={1} Pобс={2}", Math_wait_canal, Math_wait_turn, P_of_service);
+            file.WriteLine("m.кан={0} m.оч={1} Pобс={2}", MathWaitСanal, MathWaitTurn, PService);
             file.WriteLine();
             file.Close();
         }
@@ -176,10 +171,10 @@ namespace WindowsFormsApplication1
     }
 
     [Serializable]
-    public class PrintingDynamicData : Dinamic
+    public class PrintingDynamicData : Dynamic
     {
-        public string filename;
-        private ZedGraphControl zedGraphControl1;
+        public string filename = "";
+        ZedGraphControl zedGraphControl1;
         public PrintingDynamicData(int n, int m, double lyamda, double mu, string filename, ZedGraphControl zedGraphControl1)
             : base(n, m, lyamda, mu) { this.filename = filename; this.zedGraphControl1 = zedGraphControl1; }
         public void PrintLine(double[] x, double[] y, string name, ZedGraphControl zedGraphControl1)
@@ -211,7 +206,6 @@ namespace WindowsFormsApplication1
             GraphPane myPane = zedGraphControl1.GraphPane;
             PointPairList[] spl = new PointPairList[N + M + 1];
             LineItem[] myCurve = new LineItem[N + M + 1];
-
 
             double[] K1, K2, K3, K4;
             double h = 0.001;
@@ -281,7 +275,7 @@ namespace WindowsFormsApplication1
             for (int i = 0; i < Time.Length; i++)
             {
                 file.Write("{0:0.0}\t", Time[i]);
-                for (int j = 0; j <= N + M; j++) { file.Write("{0:0.00000}\t", Probability_of_time[i, j], 5); }
+                for (int j = 0; j <= N + M; j++) { file.Write("{0:0.00000}\t", ProbabilityTime[i, j], 5); }
                 file.WriteLine();
             }
             file.WriteLine();
@@ -297,15 +291,15 @@ namespace WindowsFormsApplication1
             for (int i = 0; i <= N + M; i++)
             {
                 file.Write("P{0}\t {1:0.00000}\t ", i, Probability[i]);
-                for (int j = 0; j < Five_per_cent_tube.GetLength(1); j++)
-                { file.Write("{0:0.00000}\t ", Five_per_cent_tube[i, j]); }
+                for (int j = 0; j < FivePerCentTube.GetLength(1); j++)
+                { file.Write("{0:0.00000}\t ", FivePerCentTube[i, j]); }
                 file.WriteLine();
             }
             file.WriteLine();
             file.WriteLine();
             file.Close();
 
-            PrintLines(Time, Probability_of_time, zedGraphControl1);
+            PrintLines(Time, ProbabilityTime, zedGraphControl1);
             Image bmp = zedGraphControl1.GetImage();
             bmp.Save("Pk(t).bmp");
         }
@@ -319,8 +313,8 @@ namespace WindowsFormsApplication1
                 file.Write("{0:0.0}\t", Time[i]);
             file.WriteLine();
             file.Write("m.оч\t");
-            for (int i = 0; i < Math_wait_canal_of_time.Length; i++)
-                file.Write("{0:0.00000}\t", Math_wait_canal_of_time[i]);
+            for (int i = 0; i < MathWaitCanalTime.Length; i++)
+                file.Write("{0:0.00000}\t", MathWaitCanalTime[i]);
             file.WriteLine();
             file.WriteLine();
             file.WriteLine();
@@ -332,8 +326,8 @@ namespace WindowsFormsApplication1
                 file.Write("{0:0.0}\t", Time[i]);
             file.WriteLine();
             file.Write("m.оч\t");
-            for (int i = 0; i < Math_wait_turn_of_time.Length; i++)
-                file.Write("{0:0.00000}\t", Math_wait_turn_of_time[i]);
+            for (int i = 0; i < MathWaitTurnTime.Length; i++)
+                file.Write("{0:0.00000}\t", MathWaitTurnTime[i]);
             file.WriteLine();
             file.WriteLine();
             file.WriteLine();
@@ -345,24 +339,24 @@ namespace WindowsFormsApplication1
                 file.Write("{0:0.0}\t", Time[i]);
             file.WriteLine();
             file.Write("Р.обс\t");
-            for (int i = 0; i < P_of_service_of_time.Length; i++)
-                file.Write("{0:0.00000}\t", P_of_service_of_time[i]);
+            for (int i = 0; i < PServiceTime.Length; i++)
+                file.Write("{0:0.00000}\t", PServiceTime[i]);
             file.WriteLine();
             file.WriteLine();
             file.WriteLine();
             file.Close();
 
-            PrintLine(Time, Math_wait_canal_of_time, "Математическое ожидание каналов", zedGraphControl1);
+            PrintLine(Time, MathWaitCanalTime, "Математическое ожидание каналов", zedGraphControl1);
             Image bmp = zedGraphControl1.GetImage();
             bmp.Save("Матожидание_каналов.bmp");
-            PrintLine(Time, Math_wait_turn_of_time, "Средняяя длина очереди", zedGraphControl1);
+            PrintLine(Time, MathWaitTurnTime, "Средняяя длина очереди", zedGraphControl1);
             bmp = zedGraphControl1.GetImage();
             bmp.Save("Средняя_длина_очереди.bmp");
-            PrintLine(Time, P_of_service_of_time, "Вероятность обслуживания, как функция времени", zedGraphControl1);
+            PrintLine(Time, PServiceTime, "Вероятность обслуживания, как функция времени", zedGraphControl1);
             bmp = zedGraphControl1.GetImage();
             bmp.Save("Вероятность_обслуживания_t.bmp");
         }
-        public PrintingDynamicData() { }
+        public PrintingDynamicData() : base() { }
     }
 
 }

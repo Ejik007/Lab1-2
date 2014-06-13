@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
-namespace Stationaldat
+namespace StationalDat
 {
     [Serializable]
     public class StationalData
@@ -16,9 +11,9 @@ namespace Stationaldat
         double mu = 1;           //Интенсивность обслуживания
         double ro = 1;           // lyamda/mu
         double[] probability;    //Вероятность нахождения в системе К требований
-        double math_wait_canal;  //Математическое ожидание канала
-        double math_wait_turn;   //Математическое ожидание очереди
-        double p_of_service;     //Вероятность обслуживания = 1 - Вероятность отказа
+        double mathwaitсanal;  //Математическое ожидание канала
+        double mathwaitturn;   //Математическое ожидание очереди
+        double pservice;     //Вероятность обслуживания = 1 - Вероятность отказа
 
         public int N
         {
@@ -45,20 +40,20 @@ namespace Stationaldat
             get { return this.probability; }
             set { this.probability = value; }
         }
-        public double Math_wait_canal
+        public double MathWaitСanal
         {
-            get { return this.math_wait_canal; }
-            set { this.math_wait_canal = value; }
+            get { return this.mathwaitсanal; }
+            set { this.mathwaitсanal = value; }
         }
-        public double Math_wait_turn
+        public double MathWaitTurn
         {
-            get { return this.math_wait_turn; }
-            set { this.math_wait_turn = value; }
+            get { return this.mathwaitturn; }
+            set { this.mathwaitturn = value; }
         }
-        public double P_of_service
+        public double PService
         {
-            get { return this.p_of_service; }
-            set { this.p_of_service = value; }
+            get { return this.pservice; }
+            set { this.pservice = value; }
         }
 
         long Fact(int n) //Вычисление факториала
@@ -69,24 +64,24 @@ namespace Stationaldat
             return x;
         }
 
-        public void calculation_properties() //Вычисление математического ожидания канала, очереди, вероятности обслуживания
+        public void CalculationProperties() //Вычисление математического ожидания канала, очереди, вероятности обслуживания
         {
-            math_wait_canal = 0;
+            mathwaitсanal = 0;
             for (int k = 0; k < n; k++)
             {
-                math_wait_canal += k * probability[k];
+                mathwaitсanal += k * probability[k];
             }
-            math_wait_turn = 0;
+            mathwaitturn = 0;
             for (int k = n; k <= n + m; k++)
             {
-                math_wait_canal += n * probability[k];
-                math_wait_turn += (k - n) * probability[k];
+                mathwaitсanal += n * probability[k];
+                mathwaitturn += (k - n) * probability[k];
             }
-            p_of_service = 1 - probability[m + n];
+            pservice = 1 - probability[m + n];
         }
 
-        void calculate_of_probability() //Расчет стационарных значений вероятностей
-        {   
+        void CalculateProbability() //Расчет стационарных значений вероятностей
+        {
             probability[0] = 1;  //Расчет нулевого значения
             for (int k = 1; k < n; k++)
             {
@@ -103,7 +98,7 @@ namespace Stationaldat
             {
                 probability[k] = (Math.Pow(ro, n) / Fact(n)) * Math.Pow(ro / n, k - n) * probability[0];
             }
-            calculation_properties(); //Расчет остальных параметров использую значения вероятностей
+            CalculationProperties(); //Расчет остальных параметров использую значения вероятностей
         }
         public StationalData(int n, int m, double lyamda, double mu)
         {
@@ -113,7 +108,7 @@ namespace Stationaldat
             this.mu = mu;
             this.ro = this.lyamda / this.mu;
             this.probability = new double[m + n + 1];
-            calculate_of_probability();
+            CalculateProbability();
         }
         public StationalData() { }
     }

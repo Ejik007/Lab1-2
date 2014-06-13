@@ -62,7 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dinamic.cs" />
+    <Compile Include="Dynamic.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
