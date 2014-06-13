@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<PrintStationaryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <N>3</N>
+  <M>3</M>
+  <Lyamda>10</Lyamda>
+  <Mu>2</Mu>
+  <Probability>
+    <double>0.0043787334108170931</double>
+    <double>0.021893667054085464</double>
+    <double>0.054734167635213667</double>
+    <double>0.0912236127253561</double>
+    <double>0.15203935454226017</double>
+    <double>0.25339892423710031</double>
+    <double>0.42233154039516724</double>
+  </Probability>
+  <Math_wait_canal>2.8883422980241642</Math_wait_canal>
+  <Math_wait_turn>1.9258318242019623</Math_wait_turn>
+  <P_of_service>0.57766845960483271</P_of_service>
+  <filename>data.txt</filename>
+</PrintStationaryData>

@@ -63,7 +63,7 @@
             this.n2 = new System.Windows.Forms.NumericUpDown();
             this.n1 = new System.Windows.Forms.NumericUpDown();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonM = new System.Windows.Forms.RadioButton();
             this.radioButtonN = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -606,7 +606,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.radioButtonM);
             this.panel1.Controls.Add(this.radioButtonN);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Location = new System.Drawing.Point(6, 19);
@@ -614,15 +614,16 @@
             this.panel1.Size = new System.Drawing.Size(231, 37);
             this.panel1.TabIndex = 0;
             // 
-            // radioButton2
+            // radioButtonM
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(164, 16);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(33, 17);
-            this.radioButton2.TabIndex = 2;
-            this.radioButton2.Text = "m";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButtonM.AutoSize = true;
+            this.radioButtonM.Location = new System.Drawing.Point(164, 16);
+            this.radioButtonM.Name = "radioButtonM";
+            this.radioButtonM.Size = new System.Drawing.Size(33, 17);
+            this.radioButtonM.TabIndex = 2;
+            this.radioButtonM.Text = "m";
+            this.radioButtonM.UseVisualStyleBackColor = true;
+            this.radioButtonM.CheckedChanged += new System.EventHandler(this.radioButtonM_CheckedChanged);
             // 
             // radioButtonN
             // 
@@ -635,6 +636,7 @@
             this.radioButtonN.TabStop = true;
             this.radioButtonN.Text = "n";
             this.radioButtonN.UseVisualStyleBackColor = true;
+            this.radioButtonN.CheckedChanged += new System.EventHandler(this.radioButtonN_CheckedChanged);
             // 
             // label5
             // 
@@ -729,7 +731,7 @@
         private System.Windows.Forms.NumericUpDown n2;
         private System.Windows.Forms.NumericUpDown n1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButtonM;
         private System.Windows.Forms.RadioButton radioButtonN;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
