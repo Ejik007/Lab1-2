@@ -245,11 +245,11 @@ namespace ConsoleApplication1
                 try
                 {
                     Console.Clear();
-                    Console.WriteLine("Введите длину прямоугольника:");
+                    Console.WriteLine("Введите длину параллелепипеда:");
                     this.sidea = Convert.ToInt16(Console.ReadLine());
-                    Console.WriteLine("Введите ширину прямоугольника:");
+                    Console.WriteLine("Введите ширину параллелепипеда:");
                     this.sideb = Convert.ToInt16(Console.ReadLine());
-                    Console.WriteLine("Введите высоту прямоугольника:");
+                    Console.WriteLine("Введите высоту параллелепипеда:");
                     this.sidec = Convert.ToInt16(Console.ReadLine());
                 }
                 catch (FormatException)
@@ -309,11 +309,11 @@ namespace ConsoleApplication1
     //интерфейсы
     public interface ShowArea
     {
-        string ShowArea(); //По
+        string ShowArea(); //показать площадь
     }
     public interface ShowVolume
     {
-        string ShowVolume();
+        string ShowVolume();  //показать объем
     }
 
     class Program
@@ -398,6 +398,7 @@ namespace ConsoleApplication1
         /// <param name="l">Текущий уровень</param>
         /// <param name="l1">Следующий уровень</param>
         /// <param name="l2">Предыдущий уровень, или тот же или строка</param>
+
         private static void Levels(level l, level l1, level l2, level l3)
         {
             ConsoleKeyInfo cki = new ConsoleKeyInfo();
@@ -409,17 +410,9 @@ namespace ConsoleApplication1
             {
                 if (cki.Key == ConsoleKey.D1) ShowMenu(l1);
                 if (cki.Key == ConsoleKey.D2) ShowMenu(l2);
-                else if (cki.Key == ConsoleKey.D0) ShowMenu(l2);
+                else if (cki.Key == ConsoleKey.D0) ShowMenu(l3);
             }
 
-        }
-        private static void Levels(level l, level l1, level l2)
-        {
-            ConsoleKeyInfo cki = new ConsoleKeyInfo();
-            cki = Console.ReadKey();    // Считываем нажатую клавишу
-            if (cki.Key != ConsoleKey.D0 && cki.Key != ConsoleKey.D1) ShowMenu(l);
-            if (cki.Key == ConsoleKey.D1) ShowMenu(l1);
-            else if (cki.Key == ConsoleKey.D0) ShowMenu(l2);
         }
 
         private static void Levels(level l, level l1, level l2, level l3, level down)
