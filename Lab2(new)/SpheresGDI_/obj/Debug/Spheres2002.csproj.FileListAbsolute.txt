@@ -1,0 +1,6 @@
+C:\Users\igor\Downloads\SpheresGDI_\obj\Debug\Spheres.FrmMain.resources
+C:\Users\igor\Downloads\SpheresGDI_\obj\Debug\Spheres2002.csproj.GenerateResource.Cache
+C:\Users\igor\Downloads\SpheresGDI_\bin\Debug\Spheres2002.exe
+C:\Users\igor\Downloads\SpheresGDI_\bin\Debug\Spheres2002.pdb
+C:\Users\igor\Downloads\SpheresGDI_\obj\Debug\Spheres2002.exe
+C:\Users\igor\Downloads\SpheresGDI_\obj\Debug\Spheres2002.pdb

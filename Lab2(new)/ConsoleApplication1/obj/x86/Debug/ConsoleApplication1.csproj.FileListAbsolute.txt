@@ -1,0 +1,10 @@
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.pdb
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\3DCubeNoGimbalLock.exe
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\3DCubeNoGimbalLock.pdb
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\Spheres2002.exe
+C:\Users\igor\Downloads\3DCubeNoGimbalLock\3DCubeNoGimbalLock\ConsoleApplication1\bin\Debug\Spheres2002.pdb
