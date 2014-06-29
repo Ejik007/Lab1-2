@@ -16,3 +16,12 @@ C:\Users\Igor\Desktop\freelance\орисовка простых фигур и п
 C:\Users\Igor\Desktop\freelance\орисовка простых фигур и псевдо3d\drawFigure\DrawingFigures\obj\x86\Debug\DrawingFigures.FrmRender.resources
 C:\Users\Igor\Desktop\freelance\орисовка простых фигур и псевдо3d\drawFigure\DrawingFigures\obj\x86\Debug\DrawingFigures.FrmMain.resources
 C:\Users\Igor\Desktop\freelance\орисовка простых фигур и псевдо3d\drawFigure\DrawingFigures\obj\x86\Debug\DrawingFigures.csproj.GenerateResource.Cache
+C:\Users\XE\Desktop\Lab2(new)\bin\Debug\DrawingFigures.exe.config
+C:\Users\XE\Desktop\Lab2(new)\obj\x86\Debug\DrawingFigures.exe
+C:\Users\XE\Desktop\Lab2(new)\obj\x86\Debug\DrawingFigures.pdb
+C:\Users\XE\Desktop\Lab2(new)\bin\Debug\DrawingFigures.exe
+C:\Users\XE\Desktop\Lab2(new)\bin\Debug\DrawingFigures.pdb
+C:\Users\XE\Desktop\Lab2(new)\obj\x86\Debug\DrawingFigures.csprojResolveAssemblyReference.cache
+C:\Users\XE\Desktop\Lab2(new)\obj\x86\Debug\DrawingFigures.FrmRender.resources
+C:\Users\XE\Desktop\Lab2(new)\obj\x86\Debug\DrawingFigures.FrmMain.resources
+C:\Users\XE\Desktop\Lab2(new)\obj\x86\Debug\DrawingFigures.csproj.GenerateResource.Cache

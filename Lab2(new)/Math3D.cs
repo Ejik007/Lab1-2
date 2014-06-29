@@ -3,11 +3,7 @@
 // Visual C# Kicks - http://www.vcskicks.com/ |
 //=============================================
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
